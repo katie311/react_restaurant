@@ -25,15 +25,15 @@ class App extends Component {
     });
   }
 
-  editMenu = (id, name) => {
-    axios.put(`/api/menus/${id}`, {name})
-      .then( res => {
+  editMenu = (id, menu) => {
+    axios.put(`/api/menus/${id}`, {menu})
+    .then( res => {
         const menus = this.state.menus.map( m => {
         if (m.id === id)
           return res.data;
         return m;
       });
-      this.setState({ menus: [...this.state.menus, res.data], });
+      this.setState({ menus });
     })
   }
 

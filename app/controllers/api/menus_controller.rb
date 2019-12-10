@@ -1,5 +1,6 @@
 class Api::MenusController < ApplicationController
     before_action :set_menu, only: [:show, :update, :destroy]
+
     def index
         render json: Menu.all
     end
@@ -14,8 +15,11 @@ class Api::MenusController < ApplicationController
     end
 
     def update
-        @menu.update(menu_params)
+        if @menu.update(menu_params)
         render json: @menu 
+        else 
+            render json: { errors: stat.errors }, status: :unprocessable_entity
+        end
     end
 
     def destroy
@@ -31,6 +35,11 @@ class Api::MenusController < ApplicationController
 
     def menu_params
         params.require(:menu).permit(:name)
+        # if params[:menu].is_a? String
+        #     params[:menu]
+        #   else
+        #     params.require(:menu).permit(:name)
+        #   end
     end
 
 end
